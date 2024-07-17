@@ -36,6 +36,12 @@ class HsNetceteraUtils {
     }
   }
 
+  fun hideProgressView(activity: Activity?) {
+      activity?.runOnUiThread {
+        transaction.getProgressView(activity).hideProgress()
+      }
+  }
+
   fun setChallengeParameter(challengeParameters: ChallengeParameters, callback: Callback) {
     this.challengeParameters = challengeParameters
     val map = Arguments.createMap();

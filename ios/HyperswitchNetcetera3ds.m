@@ -13,6 +13,8 @@ RCT_EXTERN_METHOD(generateAReqParams:
                   (NSString *)directoryServerId:
                   (RCTResponseSenderBlock)callback)
 
+RCT_EXTERN_METHOD(hideProgressView)
+
 RCT_EXTERN_METHOD(recieveChallengeParamsFromRN:
                   (NSString *)acsSignedContent:
                   (NSString *)acsRefNumber:

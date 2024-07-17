@@ -80,4 +80,9 @@ class HyperswitchNetcetera3dsModule(reactContext: ReactApplicationContext) : Rea
 
   }
 
+  @ReactMethod
+  fun hideProgressView() {
+    hsNetceteraUtils.hideProgressView(currentActivity)
+  }
+
 }

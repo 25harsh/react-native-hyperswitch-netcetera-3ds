@@ -134,6 +134,13 @@ class HyperswitchNetcetera3ds: NSObject {
             }
         }
     }
+
+    @objc(hideProgressView)
+    func hideProgressView(){
+        DispatchQueue.main.async {
+            self.progressView?.stop()
+        }
+    }
     
     @objc
     func recieveChallengeParamsFromRN(_ acsSignedContent: String,
