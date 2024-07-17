@@ -1,18 +1,5 @@
 import { NativeModules } from 'react-native';
 
-export type statusType = {
-  status: string;
-  message: string;
-};
-export type AReqParams = {
-  deviceData: string;
-  messageVersion: string;
-  sdkTransId: string;
-  sdkAppId: string;
-  sdkEphemeralKey: any;
-  sdkReferenceNo: string;
-};
-
 const HyperswitchNetcetera3ds = NativeModules.HyperswitchNetcetera3ds || null;
 const isAvailable = HyperswitchNetcetera3ds && HyperswitchNetcetera3ds.initialiseNetceteraSDK;
 
@@ -61,6 +48,20 @@ function recieveChallengeParamsFromRN(
 function generateChallenge(callback: (status: statusType) => void) {
   return HyperswitchNetcetera3ds.generateChallenge(callback);
 }
+
+export type statusType = {
+  status: string;
+  message: string;
+};
+
+export type AReqParams = {
+  deviceData: string;
+  messageVersion: string;
+  sdkTransId: string;
+  sdkAppId: string;
+  sdkEphemeralKey: any;
+  sdkReferenceNo: string;
+};
 
 export {
   isAvailable,
