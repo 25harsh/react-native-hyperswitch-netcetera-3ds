@@ -1,13 +1,19 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-hyperswitch-netcetera-3ds';
+import {
+  isAvailable,
+  initialiseNetceteraSDK,
+  generateAReqParams,
+  recieveChallengeParamsFromRN,
+  generateChallenge,
+} from 'react-native-hyperswitch-netcetera-3ds';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+
   }, []);
 
   return (

@@ -36,12 +36,6 @@ class HsNetceteraUtils {
     }
   }
 
-  fun hideProgressView(activity: Activity?) {
-      activity?.runOnUiThread {
-        transaction.getProgressView(activity).hideProgress()
-      }
-  }
-
   fun setChallengeParameter(challengeParameters: ChallengeParameters, callback: Callback) {
     this.challengeParameters = challengeParameters
     val map = Arguments.createMap();
@@ -107,7 +101,7 @@ class HsNetceteraUtils {
         messageVersion
       )
       activity?.runOnUiThread {
-        transaction.getProgressView(activity).showProgress()
+        transaction.getProgressView(activity)
       }
       val aReqMap = Arguments.createMap()
       aReqMap.putString("deviceData", transaction.authenticationRequestParameters.deviceData)

@@ -49,10 +49,6 @@ function generateChallenge(callback: (status: statusType) => void) {
   return HyperswitchNetcetera3ds.generateChallenge(callback);
 }
 
-function hideProgressView() {
-  return HyperswitchNetcetera3ds.hideProgressView();
-}
-
 export type statusType = {
   status: string;
   message: string;
@@ -73,5 +69,4 @@ export {
   generateAReqParams,
   recieveChallengeParamsFromRN,
   generateChallenge,
-  hideProgressView
 };

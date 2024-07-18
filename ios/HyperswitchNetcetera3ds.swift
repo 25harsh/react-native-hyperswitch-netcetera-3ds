@@ -110,7 +110,6 @@ class HyperswitchNetcetera3ds: NSObject {
                 
                 self.vc = RCTPresentedViewController()
                 self.progressView = try self.transaction?.getProgressView()
-                self.progressView?.start()
                 
                 let authenticationParameters = try transaction.getAuthenticationRequestParameters()
                 var authReqMap: [String: String] = [:]
@@ -134,14 +133,6 @@ class HyperswitchNetcetera3ds: NSObject {
             }
         }
     }
-
-    @objc(hideProgressView)
-    func hideProgressView(){
-        DispatchQueue.main.async {
-            self.progressView?.stop()
-        }
-    }
-    
     @objc
     func recieveChallengeParamsFromRN(_ acsSignedContent: String,
                                       _ acsRefNumber: String,
