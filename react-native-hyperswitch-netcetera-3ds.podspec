@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/25harsh/react-native-hyperswitch-netcetera-3ds.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  s.vendored_frameworks = "ios/ThreeDS_SDK.xcframework"
+  s.vendored_frameworks = "ios/ThreeDS_SDK.framework"
   
   s.dependency "React-Core"
 
