@@ -17,6 +17,7 @@ class HyperswitchNetcetera3ds: NSObject {
     private var challengeParams: ChallengeParameters?
     private var transaction: Transaction?
     private var progressView: ProgressDialog?
+    
     private var vc: UIViewController?
     private var hsSDKEnvironment: String?
     
