@@ -10,13 +10,15 @@ import ThreeDS_SDK
 
 @objc(HyperswitchNetcetera3ds)
 class HyperswitchNetcetera3ds: NSObject {
-    let threeDS2Service: ThreeDS2Service = ThreeDS2ServiceSDK()
+    private let challengeStatusReceiver: HyperswitchChallengeManager = HyperswitchChallengeManager()
+    
+    private let threeDS2Service: ThreeDS2Service = ThreeDS2ServiceSDK()
     private var configParams: ConfigParameters?
-    private var hsSDKEnvironment: String?
     private var challengeParams: ChallengeParameters?
     private var transaction: Transaction?
     private var progressView: ProgressDialog?
     private var vc: UIViewController?
+    private var hsSDKEnvironment: String?
     
     @objc
     func initialiseNetceteraSDK(_ apiKey: String,
@@ -156,7 +158,6 @@ class HyperswitchNetcetera3ds: NSObject {
     
     @objc
     func generateChallenge(_ callback: @escaping RCTResponseSenderBlock) {
-        let challengeStatusReceiver: HyperswitchChallengeManager = HyperswitchChallengeManager()
         challengeStatusReceiver.setPostHSChallengeCallback(callback)
         
         DispatchQueue.global().async {
@@ -174,7 +175,7 @@ class HyperswitchNetcetera3ds: NSObject {
                 
                 try transaction.doChallenge(
                     challengeParameters: challengeParams,
-                    challengeStatusReceiver: challengeStatusReceiver,
+                    challengeStatusReceiver: self.challengeStatusReceiver,
                     timeOut: 5,
                     inViewController: vc
                 )
