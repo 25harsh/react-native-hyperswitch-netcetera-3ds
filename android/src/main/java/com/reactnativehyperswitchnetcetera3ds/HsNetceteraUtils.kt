@@ -2,26 +2,23 @@ package com.reactnativehyperswitchnetcetera3ds
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Callback
 import com.netcetera.threeds.sdk.ThreeDS2ServiceInstance
 import com.netcetera.threeds.sdk.api.ThreeDS2Service
 import com.netcetera.threeds.sdk.api.transaction.Transaction
 import com.netcetera.threeds.sdk.api.transaction.challenge.ChallengeParameters
-import com.netcetera.threeds.sdk.api.transaction.challenge.ChallengeStatusReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.properties.Delegates
 
 
 class HsNetceteraUtils {
   val threeDS2Service: ThreeDS2Service
   private lateinit var challengeParameters: ChallengeParameters
   private lateinit var transaction: Transaction
+
 
   constructor() {
     this.threeDS2Service = ThreeDS2ServiceInstance.get()
@@ -53,11 +50,9 @@ class HsNetceteraUtils {
   }
 
   fun intialiseNetceteraSDK(context: Context, callback: Callback) {
-//    Log.i("initialise Netcetera", "ok")
-//    Log.i("initialise Netcetera", threeDS2Service.toString())
     val map = Arguments.createMap()
     CoroutineScope(Dispatchers.IO).launch {
-      threeDS2Service.initialize(context, HsNetceteraConfigurator.configParams, "en", null, object :
+      threeDS2Service.initialize(context, HsNetceteraConfigurator.configParams,HsNetceteraConfigurator.locale,HsNetceteraConfigurator.challengeCustomisationObject, object :
         ThreeDS2Service.InitializationCallback {
         override fun onCompleted() {
           //...
