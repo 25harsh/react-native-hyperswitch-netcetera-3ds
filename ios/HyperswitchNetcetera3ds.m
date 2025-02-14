@@ -6,6 +6,7 @@
 RCT_EXTERN_METHOD(initialiseNetceteraSDK: 
                   (NSString *)apiKey:
                   (NSString *)hsSDKEnvironment:
+                  (NSString *)challengeCustomisationObject:
                   (RCTResponseSenderBlock)callback)
 
 RCT_EXTERN_METHOD(generateAReqParams: 
