@@ -1,6 +1,7 @@
 package com.reactnativehyperswitchnetcetera3ds
 
 import android.app.Application
+import android.util.Log
 import com.netcetera.threeds.sdk.api.configparameters.ConfigParameters
 import com.netcetera.threeds.sdk.api.configparameters.builder.ConfigurationBuilder
 import com.netcetera.threeds.sdk.api.configparameters.builder.SchemeConfiguration
@@ -21,6 +22,11 @@ class HsNetceteraConfigurator {
     lateinit var hsSDKEnviroment: HsSDKEnviroment
     lateinit var challengeCustomisationObject: HashMap<UiCustomization.UiCustomizationType, UiCustomization>
     lateinit var locale: String
+
+    @JvmStatic
+    fun getButtonType(buttonType: String): UiCustomization.ButtonType {
+      return UiCustomization.ButtonType.valueOf(buttonType)
+    }
 
 
     @JvmStatic
@@ -112,67 +118,115 @@ class HsNetceteraConfigurator {
 
         jsonObject.optJSONObject("labelCustomization")?.let { labelJson ->
           uiCustomization.labelCustomization = LabelCustomization().apply {
-            textFontName = labelJson.optString("textFontName", "sans-serif")
-            textColor = labelJson.optString("textColor", "#000000")
-            textFontSize = labelJson.optInt("textFontSize", 16)
-            headingTextFontName = labelJson.optString("headingTextFontName", "sans-serif")
-            headingTextColor = labelJson.optString("headingTextColor", "#000000")
-            headingTextFontSize = labelJson.optInt("headingTextFontSize", 24)
+            labelJson.optString("textFontName").takeIf { it.isNotEmpty()  }?.let {
+              textFontName = it
+            }
+            labelJson.optString("textColor").takeIf { it.isNotEmpty()  }?.let {
+              textColor = it
+            }
+            labelJson.optInt("textFontSize", -1).takeIf { it != -1 }?.let {
+              textFontSize = it
+            }
+            labelJson.optString("headingTextFontName").takeIf { it.isNotEmpty()  }?.let {
+              headingTextFontName = it
+            }
+            labelJson.optString("headingTextColor").takeIf { it.isNotEmpty() }?.let {
+              headingTextColor = it
+            }
+            labelJson.optInt("headingTextFontSize",-1).takeIf { it != -1 }?.let {
+              headingTextFontSize = it
+            }
           }
         }
 
 
         jsonObject.optJSONObject("textBoxCustomization")?.let { textBoxJson ->
           uiCustomization.textBoxCustomization = TextBoxCustomization().apply {
-            textFontName = textBoxJson.optString("textFontName", "sans-serif")
-            textColor = textBoxJson.optString("textColor", "#565a5c")
-            textFontSize = textBoxJson.optInt("textFontSize", 16)
-            borderWidth = textBoxJson.optInt("borderWidth", 2)
-            borderColor = textBoxJson.optString("borderColor", "#e4e4e4")
-            cornerRadius = textBoxJson.optInt("cornerRadius", 20)
+            textBoxJson.optString("textFontName").takeIf { it.isNotEmpty()  }?.let {
+              textFontName = it
+            }
+            textBoxJson.optString("textColor").takeIf { it.isNotEmpty()  }?.let {
+              textColor = it
+            }
+            textBoxJson.optInt("textFontSize", -1).takeIf { it != -1 }?.let {
+              textFontSize = it
+            }
+            textBoxJson.optInt("borderWidth",-1).takeIf { it != -1  }?.let {
+              borderWidth = it
+            }
+            textBoxJson.optString("borderColor").takeIf { it.isNotEmpty()  }?.let {
+              borderColor = it
+            }
+            textBoxJson.optInt("cornerRadius",-1).takeIf { it != -1 }?.let {
+              cornerRadius = it
+            }
           }
         }
 
         // Toolbar Customization
         jsonObject.optJSONObject("toolbarCustomization")?.let { toolbarJson ->
           uiCustomization.toolbarCustomization = ToolbarCustomization().apply {
-            backgroundColor = toolbarJson.optString("backgroundColor", "#ec5851")
-            textColor = toolbarJson.optString("textColor", "#ffffff")
-            buttonText = toolbarJson.optString("buttonText", "Cancel")
-            headerText = toolbarJson.optString("headerText", "Secure Checkout")
+            toolbarJson.optString("textFontName").takeIf { it.isNotEmpty()  }?.let {
+              textFontName = it
+            }
+            toolbarJson.optString("textColor").takeIf { it.isNotEmpty()  }?.let {
+              textColor = it
+            }
+            toolbarJson.optInt("textColor",-1).takeIf { it != -1 }?.let {
+              textFontSize = it
+            }
+            toolbarJson.optString("backgroundColor").takeIf { it.isNotEmpty()  }?.let {
+              backgroundColor = it
+            }
+            toolbarJson.optString("buttonText").takeIf { it.isNotEmpty()  }?.let {
+              buttonText = it
+            }
+            toolbarJson.optString("headerText").takeIf { it.isNotEmpty()  }?.let {
+              headerText = it
+            }
           }
         }
 
 
-        jsonObject.optJSONObject("buttonCustomization")?.let { buttonJson ->
-          val submitButtonCustomization = ButtonCustomization().apply {
-            backgroundColor = buttonJson.optString("submitBackgroundColor", "#ec5851")
-            textColor = buttonJson.optString("submitTextColor", "#ffffff")
-            textFontSize = buttonJson.optInt("submitTextFontSize", 14)
-            cornerRadius = buttonJson.optInt("submitCornerRadius", 20)
-          }
-          uiCustomization.setButtonCustomization(
-            submitButtonCustomization,
-            UiCustomization.ButtonType.SUBMIT
-          )
-
-          val cancelButtonCustomization = ButtonCustomization().apply {
-            textColor = buttonJson.optString("cancelTextColor", "#ffffff")
-            textFontSize = buttonJson.optInt("cancelTextFontSize", 14)
-          }
-          uiCustomization.setButtonCustomization(
-            cancelButtonCustomization,
-            UiCustomization.ButtonType.CANCEL
-          )
+        jsonObject.optJSONArray("buttonCustomization")?.let { buttonJsonArray ->
+            for (i in 0 until buttonJsonArray.length()) {
+              val buttonJson = buttonJsonArray.optJSONObject(i)
+              buttonJson?.let {
+                val buttonCustomization = ButtonCustomization().apply {
+                  buttonJson.optString("textFontName").takeIf { it.isNotEmpty() }?.let {
+                    textFontName = it
+                  }
+                  buttonJson.optString("textColor").takeIf { it.isNotEmpty() }?.let {
+                    textColor = it
+                  }
+                  buttonJson.optInt("textFontSize", -1).takeIf { it != -1 }?.let {
+                    textFontSize = it
+                  }
+                  buttonJson.optString("backgroundColor").takeIf { it.isNotEmpty() }?.let {
+                    backgroundColor = it
+                  }
+                  buttonJson.optInt("cornerRadius", -1).takeIf { it != -1 }?.let {
+                    cornerRadius = it
+                  }
+                }
+                uiCustomization.setButtonCustomization(buttonCustomization, this.getButtonType(buttonJson.optString("buttonType")))
+              }
+            }
         }
 
 
         jsonObject.optJSONObject("viewCustomization")?.let { viewJson ->
           uiCustomization.viewCustomization = ViewCustomization().apply {
-            challengeViewBackgroundColor =
-              viewJson.optString("challengeViewBackgroundColor", "#ffffff")
-            progressViewBackgroundColor =
-              viewJson.optString("progressViewBackgroundColor", "#ffffff")
+            viewJson.optString("challengeViewBackgroundColor").takeIf {
+              it.isNotEmpty()
+            }?.let {
+              challengeViewBackgroundColor = it
+            }
+            viewJson.optString("progressViewBackgroundColor").takeIf {
+              it.isNotEmpty()
+            }?.let {
+              progressViewBackgroundColor = it
+            }
           }
         }
 
@@ -187,8 +241,12 @@ class HsNetceteraConfigurator {
       val darkModeJson = JSONObject(challengeCustomisationObject).optJSONObject("darkMode")
 
       uiCustomizationMap.apply {
-        put(UiCustomization.UiCustomizationType.DEFAULT, getUiCustomizationFromJson(lightModeJson))
-        put(UiCustomization.UiCustomizationType.DARK, getUiCustomizationFromJson(darkModeJson))
+        if (lightModeJson != null){
+          put(UiCustomization.UiCustomizationType.DEFAULT, getUiCustomizationFromJson(lightModeJson))
+        }
+        if (darkModeJson != null) {
+          put(UiCustomization.UiCustomizationType.DARK, getUiCustomizationFromJson(darkModeJson))
+        }
       }
 
       return uiCustomizationMap
