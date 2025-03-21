@@ -1,16 +1,19 @@
 import { NativeModules } from 'react-native';
 
 const HyperswitchNetcetera3ds = NativeModules.HyperswitchNetcetera3ds || null;
-const isAvailable = HyperswitchNetcetera3ds && HyperswitchNetcetera3ds.initialiseNetceteraSDK;
+const isAvailable =
+  HyperswitchNetcetera3ds && HyperswitchNetcetera3ds.initialiseNetceteraSDK;
 
 function initialiseNetceteraSDK(
   apiKey: string,
   hsSDKEnvironment: string,
+  challengeCustomisationObject: String,
   callback: (status: statusType) => void
 ) {
   return HyperswitchNetcetera3ds.initialiseNetceteraSDK(
     apiKey,
     hsSDKEnvironment,
+    challengeCustomisationObject,
     callback
   );
 }

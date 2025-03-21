@@ -25,14 +25,16 @@ class HyperswitchNetcetera3dsModule(reactContext: ReactApplicationContext) : Rea
   fun initialiseNetceteraSDK(
     apiKey: String,
     hsSDKEnvironment: String,
-    callback: Callback
+    challengeCustomisationObject: String,
+    callback: Callback,
   ) {
 
     try {
       HsNetceteraConfigurator.setConfigParameters(
         applicationContext,
         hsNetceteraUtils.hsSdkEnvironmetMapper(hsSDKEnvironment),
-        apiKey
+        apiKey,
+        challengeCustomisationObject
       )
       hsNetceteraUtils.intialiseNetceteraSDK(applicationContext, callback)
 
