@@ -77,17 +77,19 @@ class HsNetceteraConfigurator {
       threeDSServerTransID: String,
     ): ChallengeParameters {
 
-      val challengeParameters =
-        ChallengeParameters().apply {
-          set3DSServerTransactionID(threeDSServerTransID)
-          setAcsRefNumber(acsRefNumber)
-          setAcsSignedContent(acsSignedContent)
-          this.acsRefNumber = acsRefNumber
-          this.acsTransactionID = acsTransactionId
+      val challengeParameters = ChallengeParameters().apply {
+        set3DSServerTransactionID(threeDSServerTransID)
+        setAcsRefNumber(acsRefNumber)
+        setAcsSignedContent(acsSignedContent)
+        this.acsRefNumber = acsRefNumber
+        this.acsTransactionID = acsTransactionId
+        if (threeDSRequestorAppURL.isNotEmpty()) {
           this.threeDSRequestorAppURL = threeDSRequestorAppURL
         }
+      }
 
       return challengeParameters
     }
+
   }
 }
