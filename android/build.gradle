@@ -133,7 +133,7 @@ dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'io.hyperswitch:netcetra-3ds:2.5.0.1'
+  implementation 'io.hyperswitch:netcetra-3ds:2.5.2.0'
   // TODO remove this
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0"
 
