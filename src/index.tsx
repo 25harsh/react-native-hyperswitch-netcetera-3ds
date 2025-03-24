@@ -31,10 +31,9 @@ function recieveChallengeParamsFromRN(
   acsSignedContent: String,
   acsRefNumber: String,
   acsTransactionId: String,
-  threeDSRequestorURL: String,
   threeDSServerTransId: String,
-
-  callback: (status: statusType) => void
+  callback: (status: statusType) => void,
+  threeDSRequestorURL?: String
 ) {
   return HyperswitchNetcetera3ds.recieveChallengeParamsFromRN(
     acsSignedContent,
