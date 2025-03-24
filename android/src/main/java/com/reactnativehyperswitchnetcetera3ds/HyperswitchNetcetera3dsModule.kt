@@ -3,6 +3,7 @@ package com.reactnativehyperswitchnetcetera3ds
 import android.app.Activity
 import android.app.Application
 import android.util.Log
+import androidx.annotation.Nullable
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.ReactApplicationContext
@@ -60,7 +61,7 @@ class HyperswitchNetcetera3dsModule(reactContext: ReactApplicationContext) : Rea
     acsSignedContent: String,
     acsRefNumber: String,
     acsTransactionId: String,
-    threeDSRequestorURL: String,
+    @Nullable threeDSRequestorAppURL: String?,
     threeDSServerTransId: String,
     callback: Callback
   ) {
@@ -68,7 +69,7 @@ class HyperswitchNetcetera3dsModule(reactContext: ReactApplicationContext) : Rea
       acsRefNumber,
       acsSignedContent,
       acsTransactionId,
-      threeDSRequestorURL,
+      threeDSRequestorAppURL,
       threeDSServerTransId,
     )
     hsNetceteraUtils.setChallengeParameter(challengeParameters, callback)
